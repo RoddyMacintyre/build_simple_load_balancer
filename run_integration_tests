@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# -eq 0 ]
+  then
+    ARGS=discover
+else
+  ARGS=$1
+fi
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR/src
+make & make install
+cd $DIR/fts
+python -m unittest $ARGS
