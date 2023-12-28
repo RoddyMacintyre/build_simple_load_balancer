@@ -1,3 +1,0 @@
-D:/Career/programming_Education/build_load_balancer_c/cmake-build-debug/CMakeFiles/build_load_balancer_c.dir
-D:/Career/programming_Education/build_load_balancer_c/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Career/programming_Education/build_load_balancer_c/cmake-build-debug/CMakeFiles/rebuild_cache.dir
