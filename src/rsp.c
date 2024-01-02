@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <arpa/inet.h>
 
 // Constants for later use
 #define MAX_LISTEN_BACKLOG 1
@@ -53,17 +54,27 @@ void handle_client_connection(int client_socket_file_descriptor,    // low level
 
     // Find an address to connect to
     for(address_iterator = address; address_iterator != NULL; address_iterator = address_iterator->ai_next){
-        // For each, try create a socket. On failure, move on.
+        // For each, try to create a socket. On failure, move on.
+
+        printf("Address iterator: %s\n", inet_ntop(address_iterator->ai_family,
+                                                 address_iterator->ai_addr,
+                                                 address_iterator,
+                                                 address_iterator->ai_addrlen));
+
+        // Socket isn't accepted. Try to figure out why. I get a strange IP back when trying to connect.
         backend_socket_file_descriptor = socket(address_iterator->ai_family,
                                                 address_iterator->ai_socktype,
                                                 address_iterator->ai_protocol);
         if(backend_socket_file_descriptor == -1){
+            printf("Backend socket file descriptor not valid, continue...\n");
             continue;
         }
         // If success, try to connect, and if that succeeds, break the loop
+        printf("Trying to connect to backend socket file descriptor...\n");
         if(connect(backend_socket_file_descriptor,
                    address_iterator->ai_addr,
                    address_iterator->ai_addrlen) != -1){
+            printf("Connected successfully to backend socket file descriptor...\n");
             break;
         }
 
